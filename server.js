@@ -1,14 +1,15 @@
-const express = require('express');
+//const express = require('express');
 // Import and require mysql2 to run database
 const mysql = require('mysql2');
+const inquirer = require('inquirer');
 
 // Port on localhost or specific env
-const PORT = process.env.PORT || 3001;
-const app = express();
+// const PORT = process.env.PORT || 3001;
+// const app = express();
 
 // Express middleware
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+// app.use(express.urlencoded({extended: true}));
+// app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
@@ -22,11 +23,39 @@ const db = mysql.createConnection(
     console.log(`Connected to employee_db database`)
 );
 
-// Default response for a NOT FOUND request
-app.use((req, res) => {
-    res.status(404).end();
-});
+const menu = () => {
+    inquirer
+        .prompt([
+            {
+              name: 'select',
+              type: 'list',
+              message: 'What would you like to do?',
+              choices: [
+                "View All Employees",
+                "View All Employees By Department",
+                "View All Employees By Manager",
+                "Add An Employee",
+                "Remove An Employee",
+                "Update Employee Role",
+                "Update Employee Manager",
+                "View All Roles",
+                "Exit"
+              ]
 
-app.listen(PORT, () => {
-    console.log(`Server running on PORT ${PORT}`);
-});
+            }
+        ])
+        .then(answers => {
+            console.log(data)
+            
+            // switch() case then call functions for selected queries
+            switch (answers.select){
+                
+            }
+        });
+    }
+
+menu();
+
+function viewAllEmployees(){
+    db.query('', )
+}
