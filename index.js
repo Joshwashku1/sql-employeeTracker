@@ -45,11 +45,17 @@ const menu = () => {
             }
         ])
         .then(answers => {
-            console.log(data)
+            console.log("Console " + answers.select)
             
             // switch() case then call functions for selected queries
             switch (answers.select){
-                
+                case 'View All Employees':
+                    // console.log('These are ' + answers);
+                    viewAllEmployees();
+                    break;
+                case 'Exit':
+                    db.end();
+                    break;
             }
         });
     }
@@ -57,5 +63,12 @@ const menu = () => {
 menu();
 
 function viewAllEmployees(){
-    db.query('', )
-}
+    db.query('SELECT * FROM employee', (err,rows) => {
+        // console.log(rows);
+        // res.json(rows);
+        console.table(rows);
+        // Recall the menu after the specific query has been selected
+        menu();
+    });
+    
+};
