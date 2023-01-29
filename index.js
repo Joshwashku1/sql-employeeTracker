@@ -53,6 +53,27 @@ const menu = () => {
                     // console.log('These are ' + answers);
                     viewAllEmployees();
                     break;
+                case 'View All Employees By Department':
+                    employeesByDepartment();
+                    break;
+                case 'View All Employees By Manager':
+                    employeesByManager();
+                    break;
+                case 'Add An Employee':
+                    addEmployee();
+                    break;
+                case 'Remove An Employee':
+                    removeEmployee();
+                    break;
+                case 'Update Employee Role':
+                    updateEmployeeRole();
+                    break;
+                case 'Update Employee Manager':
+                    updateEmployeeManager();
+                    break;
+                case 'View All Roles':
+                    viewAllRoles();
+                    break;
                 case 'Exit':
                     db.end();
                     break;
@@ -108,7 +129,7 @@ function updateEmployeeManager(){
     });
 };
 
-function viewAllRows(){
+function viewAllRoles(){
     db.query('', (err,rows) => {
 
     });
