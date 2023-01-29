@@ -64,11 +64,52 @@ menu();
 
 function viewAllEmployees(){
     db.query('SELECT * FROM employee', (err,rows) => {
-        // console.log(rows);
-        // res.json(rows);
+        // grab the data console into a table
         console.table(rows);
         // Recall the menu after the specific query has been selected
         menu();
     });
     
+};
+
+function employeesByDepartment(){
+    db.query('', (err,rows) => {
+
+    });
+};
+
+function employeesByManager(){
+    db.query('', (err,rows) => {
+
+    });
+};
+
+function addEmployee(){
+    db.query('', (err,rows) => {
+
+    });
+};
+
+function removeEmployee(){
+    db.query('', (err,rows) => {
+
+    });
+};
+
+function updateEmployeeRole(){
+    db.query('', (err,rows) => {
+
+    });
+};
+
+function updateEmployeeManager(){
+    db.query('', (err,rows) => {
+
+    });
+};
+
+function viewAllRows(){
+    db.query('', (err,rows) => {
+
+    });
 };
