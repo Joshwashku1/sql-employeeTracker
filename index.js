@@ -3,14 +3,6 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 
-// Port on localhost or specific env
-// const PORT = process.env.PORT || 3001;
-// const app = express();
-
-// Express middleware
-// app.use(express.urlencoded({extended: true}));
-// app.use(express.json());
-
 // Connect to database
 const db = mysql.createConnection(
     {
@@ -50,7 +42,6 @@ const menu = () => {
             // switch() case then call functions for selected queries
             switch (answers.select){
                 case 'View All Employees':
-                    // console.log('These are ' + answers);
                     viewAllEmployees();
                     break;
                 case 'View All Employees By Department':
@@ -94,8 +85,19 @@ function viewAllEmployees(){
 };
 
 function employeesByDepartment(){
-    db.query('', (err,rows) => {
-
+    // Select a department and console table the employees that are in the department
+    // Select the department by using inquirer
+    // Grab the department names for inquirer
+    db.query(`SELECT d.name, r.title, e.first_name, e.last_name
+    FROM department AS d 
+    JOIN role AS r 
+    ON d.id=r.id
+    JOIN employee AS e
+    ON r.id=e.role_id
+    ORDER BY d.name` 
+    , (err,rows) => {
+        console.table(rows);
+        menu();
     });
 };
 
@@ -105,9 +107,25 @@ function employeesByManager(){
     });
 };
 
-function addEmployee(){
-    db.query('', (err,rows) => {
-
+async function addEmployee(){
+    const newEmployee = await inquirer.prompt([
+        {
+            name: 'first_name',
+            message: 'Please type in the first name of the employee.',
+            type: 'input'
+        },
+        {
+            name: 'last_name',
+            message: 'Please type in the last name of the employee.',
+            type: 'input'
+        }
+    ]);
+    console.log(newEmployee.first_name,newEmployee.last_name);
+    db.query(`INSERT INTO employee (first_name,last_name) 
+    VALUES ("${newEmployee.first_name}","${newEmployee.last_name}")`
+    , (err,rows) => {
+        viewAllEmployees();
+        menu();
     });
 };
 
@@ -130,7 +148,8 @@ function updateEmployeeManager(){
 };
 
 function viewAllRoles(){
-    db.query('', (err,rows) => {
-
+    db.query('SELECT * FROM role', (err,rows) => {
+        console.table(rows);
+        menu();
     });
 };
