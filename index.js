@@ -67,6 +67,7 @@ const menu = () => {
                     break;
                 case 'Exit':
                     db.end();
+                    process.exit(0);
                     break;
             }
         });
@@ -102,8 +103,12 @@ function employeesByDepartment(){
 };
 
 function employeesByManager(){
-    db.query('', (err,rows) => {
-
+    db.query(`SELECT e.manager_id, e.first_name, e.last_name
+    FROM employee AS e
+    ORDER BY e.manager_id`
+    , (err,rows) => {
+        console.table(rows);
+        menu();
     });
 };
 
@@ -138,9 +143,24 @@ async function addEmployee(){
     // query for role and use array to  
 };
 
-function removeEmployee(){
-    db.query('', (err,rows) => {
-
+async function removeEmployee(){
+    const deleteEmployee = await inquirer.prompt([
+        {
+            name: "firstName",
+            message: "Please type the first name of the employee you would like to remove.",
+            type: "input"
+        },
+        {
+            name: "lastName",
+            message: "Please type the last name of the employee you would like to remove.",
+            type: "input"
+        }
+    ]);
+    db.query(`DELETE FROM employee WHERE employee.first_name="${deleteEmployee.firstName}"
+    AND employee.last_name="${deleteEmployee.lastName}"`
+    , (err,rows) => {
+        viewAllEmployees();
+        menu();
     });
 };
 
