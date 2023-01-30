@@ -189,9 +189,29 @@ async function updateEmployeeRole(){
     });
 };
 
-function updateEmployeeManager(){
-    db.query('', (err,rows) => {
-
+async function updateEmployeeManager(){
+    const managerUpdated = await inquirer.prompt([
+        {
+            name: "firstName",
+            message: "Please type the first name of the employee you would like to update.",
+            type: "input"
+        },
+        {
+            name: "lastName",
+            message: "Please type the last name of the employee you would like to update.",
+            type: "input"
+        },
+        {
+            name: 'manager',
+            message: 'Please match the manager_id with the employee id (your manager_id should match the employee and its id that you would like to manage).',
+            type: 'list',
+            choices: [1,2,3,4,5,6]
+        }
+    ]);
+    db.query(`UPDATE employee SET manager_id=${managerUpdated.manager}
+    WHERE employee.first_name="${managerUpdated.firstName}" AND employee.last_name="${managerUpdated.lastName}"`, (err,rows) => {
+        console.table(rows);
+        menu();
     });
 };
 
