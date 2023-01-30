@@ -16,5 +16,5 @@ VALUES  ("Joshua","Hamann",3,null),
         ("Jim","Carrey",4,null),
         ("James","Swidrak",3,null),
         ("Johnathon","Simmonds",1,1),
-        ("Jon","Belushi",4,2),
+        ("Jon","Belushi",2,2),
         ("Jimmy","John",6,5);

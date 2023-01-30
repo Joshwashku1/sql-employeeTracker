@@ -91,7 +91,7 @@ function employeesByDepartment(){
     db.query(`SELECT d.name, r.title, e.first_name, e.last_name
     FROM department AS d 
     JOIN role AS r 
-    ON d.id=r.id
+    ON d.id=r.department_id
     JOIN employee AS e
     ON r.id=e.role_id
     ORDER BY d.name` 
@@ -118,15 +118,24 @@ async function addEmployee(){
             name: 'last_name',
             message: 'Please type in the last name of the employee.',
             type: 'input'
+        },
+        {
+            name: 'role',
+            message: 'Please type in the role id',
+            type: 'list',
+            choices: [1,2,3,4,5,6]
         }
     ]);
-    console.log(newEmployee.first_name,newEmployee.last_name);
-    db.query(`INSERT INTO employee (first_name,last_name) 
-    VALUES ("${newEmployee.first_name}","${newEmployee.last_name}")`
+
+    
+    db.query(`INSERT INTO employee (first_name,last_name,role_id) 
+    VALUES ("${newEmployee.first_name}","${newEmployee.last_name}","${newEmployee.role}")`
     , (err,rows) => {
         viewAllEmployees();
         menu();
     });
+
+    // query for role and use array to  
 };
 
 function removeEmployee(){
