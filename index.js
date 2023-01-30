@@ -126,7 +126,7 @@ async function addEmployee(){
         },
         {
             name: 'role',
-            message: 'Please type in the role id',
+            message: 'Please type in the role id.',
             type: 'list',
             choices: [1,2,3,4,5,6]
         }
@@ -139,8 +139,6 @@ async function addEmployee(){
         viewAllEmployees();
         menu();
     });
-
-    // query for role and use array to  
 };
 
 async function removeEmployee(){
@@ -164,9 +162,30 @@ async function removeEmployee(){
     });
 };
 
-function updateEmployeeRole(){
-    db.query('', (err,rows) => {
-
+async function updateEmployeeRole(){
+    const employeeUpdated = await inquirer.prompt([
+        {
+            name: "firstName",
+            message: "Please type the first name of the employee you would like to update.",
+            type: "input"
+        },
+        {
+            name: "lastName",
+            message: "Please type the last name of the employee you would like to update.",
+            type: "input"
+        },
+        {
+            name: 'role',
+            message: 'Please look at the role table above and choose the role id you would like to update.',
+            type: 'list',
+            choices: [1,2,3,4,5,6]
+        }
+    ]);
+    db.query(`UPDATE employee SET role_id=${employeeUpdated.role}
+    WHERE employee.first_name="${employeeUpdated.firstName}" AND employee.last_name="${employeeUpdated.lastName}"`
+    , (err,rows) => {
+        console.table(rows);
+        menu();
     });
 };
 
